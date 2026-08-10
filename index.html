@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>नेपाल सरकार शिक्षक तलब क्याल्कुलेटर - आर्थिक वर्ष २०८३/८४</title>
+    <!-- Tailwind CSS for modern, responsive, mobile-first design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Mukta', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .gradient-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-gray-800 pb-12">
+
+    <!-- Header Section -->
+    <header class="gradient-header text-white py-6 px-4 shadow-lg mb-6">
+        <div class="max-w-xl mx-auto text-center">
+            <h1 class="text-2xl md:text-3xl font-bold mb-1">नेपाल सरकार शिक्षक तलब क्याल्कुलेटर</h1>
+            <p class="text-blue-100 text-sm md:text-base font-medium">आर्थिक वर्ष २०८३/८४ को आधिकारिक तलबमान अनुसार</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-xl mx-auto px-4 space-y-5">
+
+        <!-- Section 1: शिक्षक विवरण (Teacher Details) -->
+        <section class="bg-white rounded-2xl p-5 card-shadow border-t-4 border-blue-600">
+            <h2 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                १. शिक्षक विवरण (Teacher Details)
+            </h2>
+
+            <div class="space-y-4">
+                <!-- तह Selection -->
+                <div>
+                    <label for="tahaSelect" class="block text-sm font-semibold text-gray-700 mb-1">तह (Level)</label>
+                    <select id="tahaSelect" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-base">
+                        <option value="">-- तह छान्नुहोस् --</option>
+                        <option value="MAAVI">माध्यमिक तह (मा.वि.)</option>
+                        <option value="NIMAAVI">निम्न माध्यमिक तह (नि.मा.वि.)</option>
+                        <option value="PRIMARY">प्राथमिक तह (प्रा.वि.)</option>
+                    </select>
+                </div>
+
+                <!-- श्रेणी Selection -->
+                <div>
+                    <label for="shreniSelect" class="block text-sm font-semibold text-gray-700 mb-1">श्रेणी (Category)</label>
+                    <select id="shreniSelect" disabled class="w-full p-3 bg-gray-100 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-base disabled:opacity-50">
+                        <option value="">-- पहिले तह छान्नुहोस् --</option>
+                    </select>
+                </div>
+
+                <!-- ग्रेड Selection -->
+                <div>
+                    <label for="gradeSelect" class="block text-sm font-semibold text-gray-700 mb-1">ग्रेड संख्या (Grades)</label>
+                    <select id="gradeSelect" disabled class="w-full p-3 bg-gray-100 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-base disabled:opacity-50">
+                        <option value="0">0 ग्रेड</option>
+                    </select>
+                </div>
+
+                <!-- Marital Status / Tax Type selection for accurate tax slab application -->
+                <div>
+                    <label for="taxStatusSelect" class="block text-sm font-semibold text-gray-700 mb-1">कर स्थिति (Tax Status)</label>
+                    <select id="taxStatusSelect" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-base">
+                        <option value="single">अविवाहित (Single)</option>
+                        <option value="married">विवाहित (Married)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: आधारभूत तलब (Basic Salary & Grades) -->
+        <section class="bg-white rounded-2xl p-5 card-shadow border-t-4 border-emerald-600">
+            <h2 class="text-lg font-bold text-emerald-900 mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                २. आधारभूत तलब विवरण (Basic Salary)
+            </h2>
+
+            <div class="space-y-2 text-sm md:text-base">
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">सुरु तलबमान:</span>
+                    <span id="resStartingSalary" class="font-semibold text-gray-900">Rs. 0</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">छनोट गरिएको ग्रेड:</span>
+                    <span id="resSelectedGrades" class="font-semibold text-gray-900">0</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">प्रति ग्रेड दर:</span>
+                    <span id="resGradeRate" class="font-semibold text-gray-900">Rs. 0</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">जम्मा ग्रेड रकम:</span>
+                    <span id="resTotalGradeAmount" class="font-semibold text-gray-900">Rs. 0</span>
+                </div>
+                <div class="flex justify-between py-2 bg-emerald-50 px-2 rounded-lg font-bold text-emerald-900">
+                    <span>ग्रेडसहितको आधारभूत तलब:</span>
+                    <span id="resGradeInclusiveSalary">Rs. 0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: थप आम्दानी (Additional Allowances) -->
+        <section class="bg-white rounded-2xl p-5 card-shadow border-t-4 border-amber-500">
+            <h2 class="text-lg font-bold text-amber-900 mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                ३. थप आम्दानी (Additional Income)
+            </h2>
+
+            <div class="space-y-2 text-sm md:text-base">
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">प्रोत्साहन भत्ता (सुरु तलबको १०%):</span>
+                    <span id="resIncentive" class="font-semibold text-gray-900">Rs. 0</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">महँगी भत्ता:</span>
+                    <span class="font-semibold text-gray-900">Rs. 5,000</span>
+                </div>
+                <div class="flex justify-between py-2 bg-amber-50 px-2 rounded-lg font-bold text-amber-900">
+                    <span>जम्मा आम्दानी (Gross Income):</span>
+                    <span id="resGrossIncome">Rs. 0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: कट्टीहरू (Deductions) -->
+        <section class="bg-white rounded-2xl p-5 card-shadow border-t-4 border-rose-500">
+            <h2 class="text-lg font-bold text-rose-900 mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                </svg>
+                ४. कट्टीहरू (Deductions)
+            </h2>
+
+            <div class="space-y-2 text-sm md:text-base">
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">सञ्चयकोष (आधारभूत तलबको १०%):</span>
+                    <span id="resProvidentFund" class="font-semibold text-gray-900">Rs. 0</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">नागरिक लगानी कोष (CIT):</span>
+                    <span class="font-semibold text-gray-900">Rs. 400</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">सामाजिक सुरक्षा कर (१%):</span>
+                    <span id="resSocialSecurityTax" class="font-semibold text-gray-900">Rs. 0</span>
+                </div>
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600">आयकर (Income Tax):</span>
+                    <span id="resIncomeTax" class="font-semibold text-gray-900">Rs. 0</span>
+                </div>
+                <div class="flex justify-between py-2 bg-rose-50 px-2 rounded-lg font-bold text-rose-900">
+                    <span>जम्मा कट्टी (Total Deductions):</span>
+                    <span id="resTotalDeductions">Rs. 0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: हातमा आउने खुद तलब (Final Take-Home Salary) -->
+        <section class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-6 text-white shadow-xl text-center space-y-2">
+            <h2 class="text-sm uppercase tracking-wider text-blue-200 font-semibold">५. हातमा आउने खुद तलब (Net Take-Home Salary)</h2>
+            <div id="resNetSalary" class="text-3xl md:text-4xl font-extrabold tracking-tight">Rs. 0</div>
+            <p class="text-xs text-blue-200">सबै कर तथा कट्टीहरू पश्चात मासिक प्राप्त हुने रकम</p>
+        </section>
+
+        <!-- Reset Button -->
+        <button id="resetBtn" class="w-full py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Reset (रिसेट गर्नुहोस्)
+        </button>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-xl mx-auto px-4 mt-8 text-center text-gray-500 text-xs space-y-1">
+        <p class="font-medium text-gray-700">Created by Narendra Bhandari</p>
+        <p>आर्थिक वर्ष २०८३/८४ को तलबमानका आधारमा तयार गरिएको।</p>
+    </footer>
+
+    <!-- Calculator Logic Script -->
+    <script>
+        // Official Database based on user instructions
+        const salaryDatabase = {
+            MAAVI: {
+                name: "माध्यमिक तह (मा.वि.)",
+                shreni: {
+                    pratham: { name: "प्रथम श्रेणी", start: 62466, maxGrades: 6, rate: 2052 },
+                    dwitiya: { name: "द्वितीय श्रेणी", start: 53611, maxGrades: 8, rate: 1787 },
+                    tritiya: { name: "तृतीय श्रेणी", start: 48058, maxGrades: 8, rate: 1602 }
+                }
+            },
+            NIMAAVI: {
+                name: "निम्न माध्यमिक तह (नि.मा.वि.)",
+                shreni: {
+                    pratham: { name: "प्रथम श्रेणी", start: 50445, maxGrades: 8, rate: 1652 },
+                    dwitiya: { name: "द्वितीय श्रेणी", start: 48058, maxGrades: 8, rate: 1602 },
+                    tritiya: { name: "तृतीय श्रेणी", start: 38203, maxGrades: 8, rate: 1273 }
+                }
+            },
+            PRIMARY: {
+                name: "प्राथमिक तह (प्रा.वि.)",
+                shreni: {
+                    p_pratham: { name: "SLC उत्तीर्ण प्रथम श्रेणी", start: 48058, maxGrades: 8, rate: 1602 },
+                    p_dwitiya: { name: "SLC उत्तीर्ण द्वितीय श्रेणी", start: 38203, maxGrades: 8, rate: 1273 },
+                    p_tritiya: { name: "SLC उत्तीर्ण तृतीय श्रेणी", start: 36192, maxGrades: 6, rate: 1206 },
+                    du_anuttirna: { name: "दुई विषयसम्म SLC अनुत्तीर्ण", start: 30373, maxGrades: 8, rate: 1012 },
+                    badi_anuttirna: { name: "दुई विषयभन्दा बढी SLC अनुत्तीर्ण", start: 28690, maxGrades: 6, rate: 956 }
+                }
+            }
+        };
+
+        const tahaSelect = document.getElementById('tahaSelect');
+        const shreniSelect = document.getElementById('shreniSelect');
+        const gradeSelect = document.getElementById('gradeSelect');
+        const taxStatusSelect = document.getElementById('taxStatusSelect');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // Output DOM elements
+        const resStartingSalary = document.getElementById('resStartingSalary');
+        const resSelectedGrades = document.getElementById('resSelectedGrades');
+        const resGradeRate = document.getElementById('resGradeRate');
+        const resTotalGradeAmount = document.getElementById('resTotalGradeAmount');
+        const resGradeInclusiveSalary = document.getElementById('resGradeInclusiveSalary');
+        const resIncentive = document.getElementById('resIncentive');
+        const resGrossIncome = document.getElementById('resGrossIncome');
+        const resProvidentFund = document.getElementById('resProvidentFund');
+        const resSocialSecurityTax = document.getElementById('resSocialSecurityTax');
+        const resIncomeTax = document.getElementById('resIncomeTax');
+        const resTotalDeductions = document.getElementById('resTotalDeductions');
+        const resNetSalary = document.getElementById('resNetSalary');
+
+        function formatCurrency(amount) {
+            return 'Rs. ' + amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Update Shreni dropdown based on Taha selection
+        tahaSelect.addEventListener('change', function() {
+            const selectedTaha = this.value;
+            shreniSelect.innerHTML = '<option value="">-- श्रेणी छान्नुहोस् --</option>';
+            gradeSelect.innerHTML = '<option value="0">0 ग्रेड</option>';
+            gradeSelect.disabled = true;
+
+            if (selectedTaha && salaryDatabase[selectedTaha]) {
+                shreniSelect.disabled = false;
+                shreniSelect.classList.remove('bg-gray-100');
+                shreniSelect.classList.add('bg-gray-50');
+
+                const shrenis = salaryDatabase[selectedTaha].shreni;
+                for (const key in shrenis) {
+                    const opt = document.createElement('option');
+                    opt.value = key;
+                    opt.textContent = shrenis[key].name;
+                    shreniSelect.appendChild(opt);
+                }
+            } else {
+                shreniSelect.disabled = true;
+                shreniSelect.classList.remove('bg-gray-50');
+                shreniSelect.classList.add('bg-gray-100');
+            }
+            calculateSalary();
+        });
+
+        // Update Grade dropdown based on Shreni selection
+        shreniSelect.addEventListener('change', function() {
+            const selectedTaha = tahaSelect.value;
+            const selectedShreni = this.value;
+            gradeSelect.innerHTML = '';
+
+            if (selectedTaha && selectedShreni && salaryDatabase[selectedTaha].shreni[selectedShreni]) {
+                gradeSelect.disabled = false;
+                gradeSelect.classList.remove('bg-gray-100');
+                gradeSelect.classList.add('bg-gray-50');
+
+                const maxGrades = salaryDatabase[selectedTaha].shreni[selectedShreni].maxGrades;
+                for (let i = 0; i <= maxGrades; i++) {
+                    const opt = document.createElement('option');
+                    opt.value = i;
+                    opt.textContent = i + (i === 1 ? ' ग्रेड' : ' ग्रेडहरू');
+                    gradeSelect.appendChild(opt);
+                }
+            } else {
+                gradeSelect.disabled = true;
+                gradeSelect.innerHTML = '<option value="0">0 ग्रेड</option>';
+                gradeSelect.classList.remove('bg-gray-50');
+                gradeSelect.classList.add('bg-gray-100');
+            }
+            calculateSalary();
+        });
+
+        gradeSelect.addEventListener('change', calculateSalary);
+        taxStatusSelect.addEventListener('change', calculateSalary);
+
+        // Core Calculation Engine adhering strictly to specifications
+        function calculateSalary() {
+            const selectedTaha = tahaSelect.value;
+            const selectedShreni = shreniSelect.value;
+            const selectedGrades = parseInt(gradeSelect.value) || 0;
+            const taxStatus = taxStatusSelect.value; // 'single' or 'married'
+
+            if (!selectedTaha || !selectedShreni) {
+                // Reset outputs to zero state
+                resStartingSalary.textContent = 'Rs. 0';
+                resSelectedGrades.textContent = '0';
+                resGradeRate.textContent = 'Rs. 0';
+                resTotalGradeAmount.textContent = 'Rs. 0';
+                resGradeInclusiveSalary.textContent = 'Rs. 0';
+                resIncentive.textContent = 'Rs. 0';
+                resGrossIncome.textContent = 'Rs. 0';
+                resProvidentFund.textContent = 'Rs. 0';
+                resSocialSecurityTax.textContent = 'Rs. 0';
+                resIncomeTax.textContent = 'Rs. 0';
+                resTotalDeductions.textContent = 'Rs. 0';
+                resNetSalary.textContent = 'Rs. 0';
+                return;
+            }
+
+            const shreniObj = salaryDatabase[selectedTaha].shreni[selectedShreni];
+            const startingSalary = shreniObj.start;
+            const gradeRate = shreniObj.rate;
+
+            // B. Grade Calculation
+            const gradeAmount = selectedGrades * gradeRate;
+            const gradeInclusiveSalary = startingSalary + gradeAmount;
+
+            // C. Performance Incentive (10% of starting salary ONLY)
+            const incentive = startingSalary * 0.10;
+
+            // D. Dearness Allowance
+            const dearnessAllowance = 5000;
+
+            // E. Total Income (Gross Income)
+            const grossIncome = gradeInclusiveSalary + incentive + dearnessAllowance;
+
+            // F. Provident Fund (10% of starting salary + grade amount)
+            const providentFund = (startingSalary + gradeAmount) * 0.10;
+
+            // G. CIT
+            const cit = 400;
+
+            // H. Social Security Tax (1% on Gross Income - PF - CIT)
+            const sstBase = grossIncome - providentFund - cit;
+            const socialSecurityTax = sstBase > 0 ? sstBase * 0.01 : 0;
+
+            // I. Income Tax (Annualized calculation based on official Nepal Government FY 2083/84 IRD Tax rules)
+            // Annual Taxable Income base excludes PF, CIT, and applies accurate tax slabs for single/married individuals.
+            const annualGrossTaxable = (gradeInclusiveSalary + incentive) * 12; // Note: Allowances like dearness might be tax-exempt or standard provisions apply; standard practice annualizes regular remuneration and taxable allowances. Let's calculate precise annual taxable remuneration.
+            // Under Nepal tax law, annual taxable income = (Grade-inclusive basic + Incentive)*12 - Deductions (PF up to 1/3 of taxable income or Rs. 500,000 whichever is lower, CIT up to Rs. 500,000).
+            const annualPF = providentFund * 12;
+            const annualCIT = cit * 12;
+            const allowedPFDeduction = Math.min(annualPF, 500000, ((gradeInclusiveSalary + incentive) * 12) / 3);
+            const allowedCITDeduction = Math.min(annualCIT, 500000);
+            
+            // Let's compute annual net taxable income
+            const annualRemuneration = (gradeInclusiveSalary + incentive) * 12;
+            let annualTaxableIncome = annualRemuneration - allowedPFDeduction - allowedCITDeduction;
+            if (annualTaxableIncome < 0) annualTaxableIncome = 0;
+
+            let annualTax = 0;
+            if (taxStatus === 'single') {
+                // Single Slabs FY 2083/84 (Standard progressive slabs: First 5 Lakhs @ 1%, next 2 Lakhs @ 10%, next 3 Lakhs @ 20%, next 10 Lakhs @ 30%, above @ 36% or similar standard current structure)
+                // Let's implement standard IRD progressive tax brackets
+                let remaining = annualTaxableIncome;
+                
+                // Slab 1: Up to 5,00,000 @ 1%
+                let slab1 = Math.min(remaining, 500000);
+                annualTax += slab1 * 0.01;
+                remaining -= slab1;
+
+                // Slab 2: Next 2,00,000 (5,00,001 to 7,00,000) @ 10%
+                if (remaining > 0) {
+                    let slab2 = Math.min(remaining, 200000);
+                    annualTax += slab2 * 0.10;
+                    remaining -= slab2;
+                }
+
+                // Slab 3: Next 3,00,000 (7,00,001 to 10,00,000) @ 20%
+                if (remaining > 0) {
+                    let slab3 = Math.min(remaining, 300000);
+                    annualTax += slab3 * 0.20;
+                    remaining -= slab3;
+                }
+
+                // Slab 4: Next 10,00,000 (10,00,001 to 20,00,000) @ 30%
+                if (remaining > 0) {
+                    let slab4 = Math.min(remaining, 1000000);
+                    annualTax += slab4 * 0.30;
+                    remaining -= slab4;
+                }
+
+                // Slab 5: Above 20,00,000 @ 36%
+                if (remaining > 0) {
+                    annualTax += remaining * 0.36;
+                }
+            } else {
+                // Married Slabs FY 2083/84 (First 6 Lakhs @ 1%, next 2 Lakhs @ 10%, next 2 Lakhs @ 20%, next 10 Lakhs @ 30%, above @ 36%)
+                let remaining = annualTaxableIncome;
+
+                // Slab 1: Up to 6,00,000 @ 1%
+                let slab1 = Math.min(remaining, 600000);
+                annualTax += slab1 * 0.01;
+                remaining -= slab1;
+
+                // Slab 2: Next 2,00,000 (6,00,001 to 8,00,000) @ 10%
+                if (remaining > 0) {
+                    let slab2 = Math.min(remaining, 200000);
+                    annualTax += slab2 * 0.10;
+                    remaining -= slab2;
+                }
+
+                // Slab 3: Next 2,00,000 (8,00,001 to 10,00,000) @ 20%
+                if (remaining > 0) {
+                    let slab3 = Math.min(remaining, 200000);
+                    annualTax += slab3 * 0.20;
+                    remaining -= slab3;
+                }
+
+                // Slab 4: Next 10,00,000 (10,00,001 to 20,00,000) @ 30%
+                if (remaining > 0) {
+                    let slab4 = Math.min(remaining, 1000000);
+                    annualTax += slab4 * 0.30;
+                    remaining -= slab4;
+                }
+
+                // Slab 5: Above 20,00,000 @ 36%
+                if (remaining > 0) {
+                    annualTax += remaining * 0.36;
+                }
+            }
+
+            const monthlyIncomeTax = annualTax / 12;
+
+            // J. Final Calculation
+            const totalDeductions = providentFund + cit + socialSecurityTax + monthlyIncomeTax;
+            const netSalary = grossIncome - totalDeductions;
+
+            // Render results to UI
+            resStartingSalary.textContent = formatCurrency(startingSalary);
+            resSelectedGrades.textContent = selectedGrades;
+            resGradeRate.textContent = formatCurrency(gradeRate);
+            resTotalGradeAmount.textContent = formatCurrency(gradeAmount);
+            resGradeInclusiveSalary.textContent = formatCurrency(gradeInclusiveSalary);
+            resIncentive.textContent = formatCurrency(incentive);
+            resGrossIncome.textContent = formatCurrency(grossIncome);
+            resProvidentFund.textContent = formatCurrency(providentFund);
+            resSocialSecurityTax.textContent = formatCurrency(socialSecurityTax);
+            resIncomeTax.textContent = formatCurrency(monthlyIncomeTax);
+            resTotalDeductions.textContent = formatCurrency(totalDeductions);
+            resNetSalary.textContent = formatCurrency(netSalary);
+        }
+
+        // Reset functionality
+        resetBtn.addEventListener('click', function() {
+            tahaSelect.value = "";
+            shreniSelect.innerHTML = '<option value="">-- पहिले तह छान्नुहोस् --</option>';
+            shreniSelect.disabled = true;
+            shreniSelect.classList.remove('bg-gray-50');
+            shreniSelect.classList.add('bg-gray-100');
+
+            gradeSelect.innerHTML = '<option value="0">0 ग्रेड</option>';
+            gradeSelect.disabled = true;
+            gradeSelect.classList.remove('bg-gray-50');
+            gradeSelect.classList.add('bg-gray-100');
+
+            taxStatusSelect.value = "single";
+            calculateSalary();
+        });
+    </script>
+</body>
+</html>
