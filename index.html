@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="ne">
 <head>
     <meta charset="UTF-8">
@@ -67,15 +67,6 @@
                     <label for="gradeSelect" class="block text-sm font-semibold text-gray-700 mb-1">ग्रेड संख्या (Grades)</label>
                     <select id="gradeSelect" disabled class="w-full p-3 bg-gray-100 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-base disabled:opacity-50">
                         <option value="0">0 ग्रेड</option>
-                    </select>
-                </div>
-
-                <!-- Marital Status / Tax Type selection for accurate tax slab application -->
-                <div>
-                    <label for="taxStatusSelect" class="block text-sm font-semibold text-gray-700 mb-1">कर स्थिति (Tax Status)</label>
-                    <select id="taxStatusSelect" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-base">
-                        <option value="single">अविवाहित (Single)</option>
-                        <option value="married">विवाहित (Married)</option>
                     </select>
                 </div>
             </div>
@@ -161,10 +152,6 @@
                     <span class="text-gray-600">सामाजिक सुरक्षा कर (१%):</span>
                     <span id="resSocialSecurityTax" class="font-semibold text-gray-900">Rs. 0</span>
                 </div>
-                <div class="flex justify-between py-2 border-b border-gray-100">
-                    <span class="text-gray-600">आयकर (Income Tax):</span>
-                    <span id="resIncomeTax" class="font-semibold text-gray-900">Rs. 0</span>
-                </div>
                 <div class="flex justify-between py-2 bg-rose-50 px-2 rounded-lg font-bold text-rose-900">
                     <span>जम्मा कट्टी (Total Deductions):</span>
                     <span id="resTotalDeductions">Rs. 0</span>
@@ -176,7 +163,7 @@
         <section class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-6 text-white shadow-xl text-center space-y-2">
             <h2 class="text-sm uppercase tracking-wider text-blue-200 font-semibold">५. हातमा आउने खुद तलब (Net Take-Home Salary)</h2>
             <div id="resNetSalary" class="text-3xl md:text-4xl font-extrabold tracking-tight">Rs. 0</div>
-            <p class="text-xs text-blue-200">सबै कर तथा कट्टीहरू पश्चात मासिक प्राप्त हुने रकम</p>
+            <p class="text-xs text-blue-200">सबै तोकिएका कट्टीहरू पश्चात मासिक प्राप्त हुने रकम</p>
         </section>
 
         <!-- Reset Button -->
@@ -197,7 +184,6 @@
 
     <!-- Calculator Logic Script -->
     <script>
-        // Official Database based on user instructions
         const salaryDatabase = {
             MAAVI: {
                 name: "माध्यमिक तह (मा.वि.)",
@@ -230,10 +216,8 @@
         const tahaSelect = document.getElementById('tahaSelect');
         const shreniSelect = document.getElementById('shreniSelect');
         const gradeSelect = document.getElementById('gradeSelect');
-        const taxStatusSelect = document.getElementById('taxStatusSelect');
         const resetBtn = document.getElementById('resetBtn');
 
-        // Output DOM elements
         const resStartingSalary = document.getElementById('resStartingSalary');
         const resSelectedGrades = document.getElementById('resSelectedGrades');
         const resGradeRate = document.getElementById('resGradeRate');
@@ -243,7 +227,6 @@
         const resGrossIncome = document.getElementById('resGrossIncome');
         const resProvidentFund = document.getElementById('resProvidentFund');
         const resSocialSecurityTax = document.getElementById('resSocialSecurityTax');
-        const resIncomeTax = document.getElementById('resIncomeTax');
         const resTotalDeductions = document.getElementById('resTotalDeductions');
         const resNetSalary = document.getElementById('resNetSalary');
 
@@ -251,7 +234,6 @@
             return 'Rs. ' + amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
-        // Update Shreni dropdown based on Taha selection
         tahaSelect.addEventListener('change', function() {
             const selectedTaha = this.value;
             shreniSelect.innerHTML = '<option value="">-- श्रेणी छान्नुहोस् --</option>';
@@ -278,7 +260,6 @@
             calculateSalary();
         });
 
-        // Update Grade dropdown based on Shreni selection
         shreniSelect.addEventListener('change', function() {
             const selectedTaha = tahaSelect.value;
             const selectedShreni = this.value;
@@ -306,17 +287,13 @@
         });
 
         gradeSelect.addEventListener('change', calculateSalary);
-        taxStatusSelect.addEventListener('change', calculateSalary);
 
-        // Core Calculation Engine adhering strictly to specifications
         function calculateSalary() {
             const selectedTaha = tahaSelect.value;
             const selectedShreni = shreniSelect.value;
             const selectedGrades = parseInt(gradeSelect.value) || 0;
-            const taxStatus = taxStatusSelect.value; // 'single' or 'married'
 
             if (!selectedTaha || !selectedShreni) {
-                // Reset outputs to zero state
                 resStartingSalary.textContent = 'Rs. 0';
                 resSelectedGrades.textContent = '0';
                 resGradeRate.textContent = 'Rs. 0';
@@ -326,7 +303,6 @@
                 resGrossIncome.textContent = 'Rs. 0';
                 resProvidentFund.textContent = 'Rs. 0';
                 resSocialSecurityTax.textContent = 'Rs. 0';
-                resIncomeTax.textContent = 'Rs. 0';
                 resTotalDeductions.textContent = 'Rs. 0';
                 resNetSalary.textContent = 'Rs. 0';
                 return;
@@ -336,122 +312,21 @@
             const startingSalary = shreniObj.start;
             const gradeRate = shreniObj.rate;
 
-            // B. Grade Calculation
             const gradeAmount = selectedGrades * gradeRate;
             const gradeInclusiveSalary = startingSalary + gradeAmount;
-
-            // C. Performance Incentive (10% of starting salary ONLY)
             const incentive = startingSalary * 0.10;
-
-            // D. Dearness Allowance
             const dearnessAllowance = 5000;
-
-            // E. Total Income (Gross Income)
             const grossIncome = gradeInclusiveSalary + incentive + dearnessAllowance;
 
-            // F. Provident Fund (10% of starting salary + grade amount)
             const providentFund = (startingSalary + gradeAmount) * 0.10;
-
-            // G. CIT
             const cit = 400;
-
-            // H. Social Security Tax (1% on Gross Income - PF - CIT)
             const sstBase = grossIncome - providentFund - cit;
             const socialSecurityTax = sstBase > 0 ? sstBase * 0.01 : 0;
 
-            // I. Income Tax (Annualized calculation based on official Nepal Government FY 2083/84 IRD Tax rules)
-            // Annual Taxable Income base excludes PF, CIT, and applies accurate tax slabs for single/married individuals.
-            const annualGrossTaxable = (gradeInclusiveSalary + incentive) * 12; // Note: Allowances like dearness might be tax-exempt or standard provisions apply; standard practice annualizes regular remuneration and taxable allowances. Let's calculate precise annual taxable remuneration.
-            // Under Nepal tax law, annual taxable income = (Grade-inclusive basic + Incentive)*12 - Deductions (PF up to 1/3 of taxable income or Rs. 500,000 whichever is lower, CIT up to Rs. 500,000).
-            const annualPF = providentFund * 12;
-            const annualCIT = cit * 12;
-            const allowedPFDeduction = Math.min(annualPF, 500000, ((gradeInclusiveSalary + incentive) * 12) / 3);
-            const allowedCITDeduction = Math.min(annualCIT, 500000);
-            
-            // Let's compute annual net taxable income
-            const annualRemuneration = (gradeInclusiveSalary + incentive) * 12;
-            let annualTaxableIncome = annualRemuneration - allowedPFDeduction - allowedCITDeduction;
-            if (annualTaxableIncome < 0) annualTaxableIncome = 0;
-
-            let annualTax = 0;
-            if (taxStatus === 'single') {
-                // Single Slabs FY 2083/84 (Standard progressive slabs: First 5 Lakhs @ 1%, next 2 Lakhs @ 10%, next 3 Lakhs @ 20%, next 10 Lakhs @ 30%, above @ 36% or similar standard current structure)
-                // Let's implement standard IRD progressive tax brackets
-                let remaining = annualTaxableIncome;
-                
-                // Slab 1: Up to 5,00,000 @ 1%
-                let slab1 = Math.min(remaining, 500000);
-                annualTax += slab1 * 0.01;
-                remaining -= slab1;
-
-                // Slab 2: Next 2,00,000 (5,00,001 to 7,00,000) @ 10%
-                if (remaining > 0) {
-                    let slab2 = Math.min(remaining, 200000);
-                    annualTax += slab2 * 0.10;
-                    remaining -= slab2;
-                }
-
-                // Slab 3: Next 3,00,000 (7,00,001 to 10,00,000) @ 20%
-                if (remaining > 0) {
-                    let slab3 = Math.min(remaining, 300000);
-                    annualTax += slab3 * 0.20;
-                    remaining -= slab3;
-                }
-
-                // Slab 4: Next 10,00,000 (10,00,001 to 20,00,000) @ 30%
-                if (remaining > 0) {
-                    let slab4 = Math.min(remaining, 1000000);
-                    annualTax += slab4 * 0.30;
-                    remaining -= slab4;
-                }
-
-                // Slab 5: Above 20,00,000 @ 36%
-                if (remaining > 0) {
-                    annualTax += remaining * 0.36;
-                }
-            } else {
-                // Married Slabs FY 2083/84 (First 6 Lakhs @ 1%, next 2 Lakhs @ 10%, next 2 Lakhs @ 20%, next 10 Lakhs @ 30%, above @ 36%)
-                let remaining = annualTaxableIncome;
-
-                // Slab 1: Up to 6,00,000 @ 1%
-                let slab1 = Math.min(remaining, 600000);
-                annualTax += slab1 * 0.01;
-                remaining -= slab1;
-
-                // Slab 2: Next 2,00,000 (6,00,001 to 8,00,000) @ 10%
-                if (remaining > 0) {
-                    let slab2 = Math.min(remaining, 200000);
-                    annualTax += slab2 * 0.10;
-                    remaining -= slab2;
-                }
-
-                // Slab 3: Next 2,00,000 (8,00,001 to 10,00,000) @ 20%
-                if (remaining > 0) {
-                    let slab3 = Math.min(remaining, 200000);
-                    annualTax += slab3 * 0.20;
-                    remaining -= slab3;
-                }
-
-                // Slab 4: Next 10,00,000 (10,00,001 to 20,00,000) @ 30%
-                if (remaining > 0) {
-                    let slab4 = Math.min(remaining, 1000000);
-                    annualTax += slab4 * 0.30;
-                    remaining -= slab4;
-                }
-
-                // Slab 5: Above 20,00,000 @ 36%
-                if (remaining > 0) {
-                    annualTax += remaining * 0.36;
-                }
-            }
-
-            const monthlyIncomeTax = annualTax / 12;
-
-            // J. Final Calculation
-            const totalDeductions = providentFund + cit + socialSecurityTax + monthlyIncomeTax;
+            // Total Deductions without Income Tax
+            const totalDeductions = providentFund + cit + socialSecurityTax;
             const netSalary = grossIncome - totalDeductions;
 
-            // Render results to UI
             resStartingSalary.textContent = formatCurrency(startingSalary);
             resSelectedGrades.textContent = selectedGrades;
             resGradeRate.textContent = formatCurrency(gradeRate);
@@ -461,12 +336,10 @@
             resGrossIncome.textContent = formatCurrency(grossIncome);
             resProvidentFund.textContent = formatCurrency(providentFund);
             resSocialSecurityTax.textContent = formatCurrency(socialSecurityTax);
-            resIncomeTax.textContent = formatCurrency(monthlyIncomeTax);
             resTotalDeductions.textContent = formatCurrency(totalDeductions);
             resNetSalary.textContent = formatCurrency(netSalary);
         }
 
-        // Reset functionality
         resetBtn.addEventListener('click', function() {
             tahaSelect.value = "";
             shreniSelect.innerHTML = '<option value="">-- पहिले तह छान्नुहोस् --</option>';
@@ -479,9 +352,9 @@
             gradeSelect.classList.remove('bg-gray-50');
             gradeSelect.classList.add('bg-gray-100');
 
-            taxStatusSelect.value = "single";
             calculateSalary();
         });
     </script>
 </body>
-</html>
+</html>                        
+        
