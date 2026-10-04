@@ -111,10 +111,17 @@
                     <span class="text-gray-600 font-medium">प्रोत्साहन भत्ता (१०%):</span>
                     <span id="resIncentive" class="font-bold text-gray-900">Rs. 0</span>
                 </div>
+
                 <div class="flex justify-between py-2 border-b border-gray-100">
                     <span class="text-gray-600 font-medium">महँगी भत्ता:</span>
                     <span class="font-bold text-gray-900">Rs. 5,000</span>
                 </div>
+
+                <div class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-600 font-medium">प्र.अ. भत्ता:</span>
+                    <span id="resHeadteacherAllowance" class="font-bold text-gray-900">Rs. 0</span>
+                </div>
+
                 <div class="flex justify-between py-3 bg-amber-50 px-3 rounded-2xl font-bold text-amber-900">
                     <span>जम्मा आम्दानी (Gross Income):</span>
                     <span id="resGrossIncome">Rs. 0</span>
@@ -216,11 +223,20 @@
         const resTotalGradeAmount = document.getElementById('resTotalGradeAmount');
         const resGradeInclusiveSalary = document.getElementById('resGradeInclusiveSalary');
         const resIncentive = document.getElementById('resIncentive');
+        const resHeadteacherAllowance = document.getElementById('resHeadteacherAllowance');
         const resGrossIncome = document.getElementById('resGrossIncome');
         const resProvidentFund = document.getElementById('resProvidentFund');
         const resSocialSecurityTax = document.getElementById('resSocialSecurityTax');
         const resTotalDeductions = document.getElementById('resTotalDeductions');
         const resNetSalary = document.getElementById('resNetSalary');
+
+        function getHeadteacherAllowance(taha) {
+            return {
+                MAAVI: 3000,
+                NIMAAVI: 2000,
+                PRIMARY: 1000
+            }[taha] || 0;
+        }
 
         function formatCurrency(amount) {
             return 'Rs. ' + amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -292,6 +308,7 @@
                 resTotalGradeAmount.textContent = 'Rs. 0';
                 resGradeInclusiveSalary.textContent = 'Rs. 0';
                 resIncentive.textContent = 'Rs. 0';
+                resHeadteacherAllowance.textContent = 'Rs. 0';
                 resGrossIncome.textContent = 'Rs. 0';
                 resProvidentFund.textContent = 'Rs. 0';
                 resSocialSecurityTax.textContent = 'Rs. 0';
@@ -308,7 +325,10 @@
             const gradeInclusiveSalary = startingSalary + gradeAmount;
             const incentive = startingSalary * 0.10;
             const dearnessAllowance = 5000;
-            const grossIncome = gradeInclusiveSalary + incentive + dearnessAllowance;
+
+            const headteacherAllowance = getHeadteacherAllowance(selectedTaha);
+
+            const grossIncome = gradeInclusiveSalary + incentive + dearnessAllowance + headteacherAllowance;
 
             const providentFund = (startingSalary + gradeAmount) * 0.10;
             const cit = 400;
@@ -324,6 +344,7 @@
             resTotalGradeAmount.textContent = formatCurrency(gradeAmount);
             resGradeInclusiveSalary.textContent = formatCurrency(gradeInclusiveSalary);
             resIncentive.textContent = formatCurrency(incentive);
+            resHeadteacherAllowance.textContent = formatCurrency(headteacherAllowance);
             resGrossIncome.textContent = formatCurrency(grossIncome);
             resProvidentFund.textContent = formatCurrency(providentFund);
             resSocialSecurityTax.textContent = formatCurrency(socialSecurityTax);
